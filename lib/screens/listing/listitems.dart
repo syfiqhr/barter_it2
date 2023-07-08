@@ -104,7 +104,6 @@ class _ListItemsState extends State<ListItems> {
               Expanded(
                   child: GridView.count(
                       crossAxisCount: axiscount,
-                      //childAspectRatio: (screenWidth * 50 )/ (screenHeight * 0.8),
                       children: List.generate(
                         catchList.length,
                         (index) {
@@ -120,7 +119,6 @@ class _ListItemsState extends State<ListItems> {
                                             ItemDetails(
                                               user: widget.user,
                                               itemIndex : item,
-                                              //usercatch: usercatch,
                                             )));
                                 loadCatches(1);
                               }, 
@@ -161,9 +159,7 @@ class _ListItemsState extends State<ListItems> {
                   itemCount: numofpage,
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) {
-                    //build the list for textbutton with scroll
                     if ((curpage - 1) == index) {
-                      //set current page number active
                       color = Color.fromARGB(255, 203, 143, 163);
                     } else {
                       color = Colors.black;
@@ -259,13 +255,7 @@ class _ListItemsState extends State<ListItems> {
               //titlecenter = "Found"; 
     });
   }
-}    /*   if (jsondata['status'] == "success") {
-          var extractdata = jsondata['data'];
-          extractdata['catches'].forEach((v) {
-            catchList.add(Item.fromJson(v));
-          });
-          print(catchList[0].itemName); 
-      } */
+}    
     }});
   }
   
