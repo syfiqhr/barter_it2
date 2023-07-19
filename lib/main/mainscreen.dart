@@ -1,13 +1,9 @@
-import 'package:barter_it2/screens/barterit/allitems.dart';
-import 'package:barter_it2/screens/barteritpage.dart';
-import 'package:barter_it2/screens/listing/additem.dart';
-import 'package:barter_it2/screens/listing/listitems.dart';
+import 'package:barter_it2/screens/news/newscreen.dart';
+import 'package:barter_it2/screens/profilescreen/profile2.dart';
 import 'package:flutter/material.dart';
-import '../../models/user.dart';
-import '../../newscreen.dart';
-import 'package:barter_it2/screens/profilescreen/profile.dart';
-
-
+import '../models/user.dart';
+import '../screens/barterit/barteritpage.dart';
+import '../screens/listing/listitems.dart';
 
 class MainScreen extends StatefulWidget {
 final User user;
@@ -27,12 +23,10 @@ class _MainScreenState extends State<MainScreen> {
   void initState() {
     super.initState();
     tabchildren = [
-     
      ListItems(user:widget.user),
-     BarterItPage(user:widget.user),
-     Profile(user:widget.user), 
-     NewScreen(user:widget.user),
-   
+     BarterScreen(user:widget.user),
+     ProfileTabScreen(user:widget.user), 
+     NewScreen(user:widget.user)       
     ];
   }
 

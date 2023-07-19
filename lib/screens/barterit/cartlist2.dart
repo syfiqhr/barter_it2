@@ -5,18 +5,19 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../../models/cartinfo.dart';
 import '../../models/user.dart';
-import '../../myconfig.dart';
+import '../../main/myconfig.dart';
 
+//shopee punya cart list 
 
-class ShowCart extends StatefulWidget {
+class CartList2 extends StatefulWidget {
   final User user;
-  const ShowCart({super.key, required this.user});
+  const CartList2({super.key, required this.user});
 
   @override
-  State<ShowCart> createState() => _ShowCartState();
+  State<CartList2> createState() => _CartList2State();
 }
 
-class _ShowCartState extends State<ShowCart> {
+class _CartList2State extends State<CartList2> {
   List<Cart> cartList = <Cart>[];
   late double screenHeight, screenWidth;
   late int axiscount = 2;
@@ -53,7 +54,7 @@ class _ShowCartState extends State<ShowCart> {
                       return ListTile(
                         leading: CachedNetworkImage(
                           imageUrl:
-                              "${MyConfig().SERVER}/barter_it2/assets/items/${cartList[index].itemId}.png",
+                              "${MyConfig().SERVER}/barter_it2/assets/items/${cartList[index].itemId}_1.png",
                           fit: BoxFit.cover,
                           placeholder: (context, url) =>
                               const LinearProgressIndicator(),
@@ -188,9 +189,9 @@ class _ShowCartState extends State<ShowCart> {
   }
 
   void loadcart() {
-    http.post(Uri.parse("${MyConfig().SERVER}/barter_it/php/loadcart.php"),
+    http.post(Uri.parse("${MyConfig().SERVER}/barter_it2/php/load_cart2.php?user_id=1"),
         body: {
-          "userid": widget.user.id,
+          "user_id": widget.user.id,
         }).then((response) {
       log(response.body);
       cartList.clear();
@@ -213,13 +214,13 @@ class _ShowCartState extends State<ShowCart> {
   }
 
   void _addItems(index) {
-    http.post(Uri.parse("${MyConfig().SERVER}/barter_it/php/additems.php"),
+    http.post(Uri.parse("${MyConfig().SERVER}/barter_it2/php/post_items.php"), //not yet
         body: {
           "item_id": cartList[index].itemId,
           "cart_qty": cartList[index].cartQty,
           "cart_price": cartList[index].cartPrice,
-          "userid": widget.user.id,
-          "sellerid": cartList[index].sellerId
+          "user_id": widget.user.id,
+          "seller_id": cartList[index].sellerId
         }).then((response) {
       // print("$num $total");
       // print(response.body);
@@ -237,13 +238,13 @@ class _ShowCartState extends State<ShowCart> {
   }
 
   void _removeItems(int index) {
-    http.post(Uri.parse("${MyConfig().SERVER}/barter_it2/php/removeitems.php"),
+    http.post(Uri.parse("${MyConfig().SERVER}/barter_it2/php/removeitems.php"), // not yet 
         body: {
           "item_id": cartList[index].itemId,
           "cart_qty": cartList[index].cartQty,
           "cart_price": cartList[index].cartPrice,
-          "userid": widget.user.id,
-          "sellerid": cartList[index].sellerId
+          "user_id": widget.user.id,
+          "seller_id": cartList[index].sellerId
         }).then((response) {
       // print("$num $total");
       // print(response.body);

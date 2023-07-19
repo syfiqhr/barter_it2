@@ -1,16 +1,15 @@
 import 'dart:convert';
 import 'dart:developer';
-
 import 'package:barter_it2/models/item.dart';
 import 'package:barter_it2/models/user.dart';
-import 'package:barter_it2/myconfig.dart';
+import 'package:barter_it2/main/myconfig.dart';
+import 'package:barter_it2/screens/barterit/cartlist2.dart';
 import 'package:barter_it2/screens/listing/additem.dart';
-import 'package:barter_it2/screens/mainpage/itemdetails.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:http/http.dart' as http;
-
+import '../barterit/itemdetails2.dart';
 
 //for buyer screen
 
@@ -40,11 +39,6 @@ class _ListItemsState extends State<ListItems> {
     print("Listing");
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-    print("dispose");
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +69,7 @@ class _ListItemsState extends State<ListItems> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (content) => AddItem(  //nnt letak cart screen
+                        builder: (content) => CartList2(  //nnt letak cart screen
                               user: widget.user,
                             )));
               }else{
@@ -116,9 +110,10 @@ class _ListItemsState extends State<ListItems> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (content) =>
-                                            ItemDetails(
+                                            ItemDetails2
+                                            (
                                               user: widget.user,
-                                              itemIndex : item,
+                                              item : item, 
                                             )));
                                 loadCatches(1);
                               }, 
@@ -126,10 +121,10 @@ class _ListItemsState extends State<ListItems> {
                                 CachedNetworkImage(
 
                                   height: 100,
-                                  width: 100,
-                                  fit: BoxFit.contain,
+                                  //width: 100,
+                                  fit: BoxFit.fitWidth,
                                   imageUrl:
-                                      "${MyConfig().SERVER}/barter_it2/assets/items/${catchList[index].itemId}.png",
+                                      "${MyConfig().SERVER}/barter_it2/assets/items/${catchList[index].itemId}_1.png",
                                   placeholder: (context, url) =>
                                       const LinearProgressIndicator(),
                                   errorWidget: (context, url, error) =>
@@ -178,7 +173,7 @@ class _ListItemsState extends State<ListItems> {
               ),
             ]),
 
-                        floatingActionButton: SpeedDial(
+        floatingActionButton: SpeedDial(
         animatedIcon: AnimatedIcons.menu_close,
         children: [
           SpeedDialChild(
@@ -231,9 +226,9 @@ class _ListItemsState extends State<ListItems> {
   }
 
     Future <void> loadCatches(int pg) async {
-    http.post(Uri.parse("${MyConfig().SERVER}/barter_it2/php/load_items.php"),
+    http.post(Uri.parse("${MyConfig().SERVER}/barter_it2/php/load_items3.php"),
         body: {
-          "userid": widget.user.id,
+          "user_id": widget.user.id,
           "numberofpage": pg.toString()
         }).then((response) {
           //print(response.body);
@@ -308,7 +303,7 @@ class _ListItemsState extends State<ListItems> {
   }
 
   Future <void> searchCatch(String search) async{
-    http.post(Uri.parse("${MyConfig().SERVER}/barter_it2/php/load_items.php"),
+    http.post(Uri.parse("${MyConfig().SERVER}/barter_it2/php/load_items3.php"),
         body: {
           "cartuserid": widget.user.id,
           "search": search
@@ -338,5 +333,5 @@ class _ListItemsState extends State<ListItems> {
     });
   }
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
-} 
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+}

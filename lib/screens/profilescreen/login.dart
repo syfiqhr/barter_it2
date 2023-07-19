@@ -4,9 +4,9 @@ import 'package:barter_it2/screens/profilescreen/register.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../main/myconfig.dart';
 import '../../models/user.dart';
-import '../../myconfig.dart';
-import 'mainscreen.dart';
+import '../../main/mainscreen.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});

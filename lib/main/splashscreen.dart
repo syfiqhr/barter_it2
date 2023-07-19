@@ -3,9 +3,10 @@ import 'dart:convert';
 import 'package:barter_it2/screens/profilescreen/login.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'models/user.dart';
-import 'myconfig.dart';
+import '../models/user.dart';
 import 'package:http/http.dart' as http;
+
+import 'myconfig.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
