@@ -6,17 +6,17 @@ import '../../models/item.dart';
 import '../../models/user.dart';
 import '../../main/myconfig.dart';
 
-class ItemDetails2 extends StatefulWidget {
+class ItemDetails3 extends StatefulWidget {
   final User user;
   final Item item;
-  const ItemDetails2({super.key, required this.user, required this.item});
+  const ItemDetails3({super.key, required this.user, required this.item});
 
 
   @override
-  State<ItemDetails2> createState() => _ItemDetails2State();
+  State<ItemDetails3> createState() => _ItemDetails3State();
 }
 
-class _ItemDetails2State extends State<ItemDetails2> {
+class _ItemDetails3State extends State<ItemDetails3> {
   int currentImageIndex = 0;
   int qty = 0;
   int userqty = 1;
@@ -198,16 +198,10 @@ class _ItemDetails2State extends State<ItemDetails2> {
             child: const Text(" Add to Cart ")),
               
               ElevatedButton(
-                onPressed: ()async{
-                    await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (content)=> CheckOutOption(
-                        user: widget.user,
-                        item: widget.item, )));}, 
-                        style: ElevatedButton.styleFrom(backgroundColor: Colors.brown),
-                        child: const Text("Check Out Item", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-      ),
+                onPressed: () {
+              addpaymentdialogue();
+              },
+            child: const Text("         Barter It         ")),
 
           ],
         ));
@@ -225,12 +219,6 @@ class _ItemDetails2State extends State<ItemDetails2> {
       return;
     }
     if (widget.user.id.toString() == widget.item.userId.toString()) {
-      // Fluttertoast.showToast(
-      //     msg: "User cannot add own item",
-      //     toastLength: Toast.LENGTH_SHORT,
-      //     gravity: ToastGravity.CENTER,
-      //     timeInSecForIosWeb: 1,
-      //     fontSize: 16.0);
       ScaffoldMessenger.of(context).showSnackBar(
            const SnackBar(content: Text("Please login/register to continue")));
       return;
@@ -242,10 +230,10 @@ class _ItemDetails2State extends State<ItemDetails2> {
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(10.0))),
           title: const Text(
-            "Make a payment",
+            "Add item to cart",
             style: TextStyle(),
           ),
-          content: const Text("You will be directed to payment page. Are you sure?", 
+          content: const Text("Are you sure?", 
           style: TextStyle()),
           actions: <Widget>[
             TextButton(
@@ -302,32 +290,49 @@ class _ItemDetails2State extends State<ItemDetails2> {
      });
 
   }
-  
- /* Future<void> deductCoin() async {
-    
-    await http.post(
-        Uri.parse(
-            "${MyConfig().SERVER}/barter_it2/php/coin.php"), // Need to change
-        body: {
-          "selectcoin": barterfees.toString(),
-          "user_id": widget.user.id,
-        }).then((response) {
-      print(response.body);
-      if (response.statusCode == 200) {
-        var jsondata = jsonDecode(response.body);
-
-        if (jsondata['status'] == "success") {
-          //user = User.fromJson(jsondata['data']);   //error
-          ScaffoldMessenger.of(context)
-              .showSnackBar(const SnackBar(content: Text("Payment Success")));
-        } else {
-          ScaffoldMessenger.of(context)
-              .showSnackBar(const SnackBar(content: Text("Payment Fail")));
-        }
-      }
-      setState(() {});
-    }).timeout(const Duration(seconds: 5));
-  } */
 
   void checkoutdialog () {}
+  
+  void addpaymentdialogue() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(10.0))),
+          title: const Text(
+            "Make a payment",
+            style: TextStyle(),
+          ),
+          content: const Text("You are required to pay RM2.00 to continue with the barter process", 
+          style: TextStyle()),
+          actions: <Widget>[
+            TextButton(
+              child: const Text(
+                "Confirm",
+                style: TextStyle(),
+              ),
+              onPressed: ()async{
+                    await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (content)=> CheckOutOption(
+                        user: widget.user,
+                        item: widget.item, )));}, 
+                        style: ElevatedButton.styleFrom(backgroundColor: Colors.white),
+            ),
+            TextButton(
+              child: const Text(
+                "Cancel",
+                style: TextStyle(),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 }

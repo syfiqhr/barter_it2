@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:http/http.dart' as http;
 import '../barterit/itemdetails2.dart';
+import '../barterit/itemdetails3.dart';
 
 //for buyer screen
 
@@ -22,7 +23,7 @@ class ListItems extends StatefulWidget {
 }
 
 class _ListItemsState extends State<ListItems> {
-  String maintitle = "Listing";
+  String maintitle = "Barter It";
   List<Item> catchList = <Item>[];
   late double screenHeight, screenWidth;
   late int axiscount = 2;
@@ -35,7 +36,7 @@ class _ListItemsState extends State<ListItems> {
   @override
   void initState() {
     super.initState();
-    loadCatches(1);
+    loadCatches();
     print("Listing");
   }
 
@@ -110,17 +111,17 @@ class _ListItemsState extends State<ListItems> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (content) =>
-                                            ItemDetails2
+                                            ItemDetails3
                                             (
                                               user: widget.user,
                                               item : item, 
                                             )));
-                                loadCatches(1);
+                                loadCatches();
                               }, 
                               child: Column(children: [
                                 CachedNetworkImage(
 
-                                  height: 100,
+                                  height: 97,
                                   //width: 100,
                                   fit: BoxFit.fitWidth,
                                   imageUrl:
@@ -148,7 +149,7 @@ class _ListItemsState extends State<ListItems> {
                         },
                       ))),
               SizedBox(
-                height: 30,
+                height: 36,
                 child: ListView.builder(
                   shrinkWrap: true,
                   itemCount: numofpage,
@@ -162,7 +163,7 @@ class _ListItemsState extends State<ListItems> {
                     return TextButton(
                         onPressed: () {
                           curpage = index + 1;
-                          loadCatches(index + 1);
+                          loadCatches();
                         },
                         child: Text(
                           (index + 1).toString(),
@@ -225,11 +226,11 @@ class _ListItemsState extends State<ListItems> {
       ));
   }
 
-    Future <void> loadCatches(int pg) async {
+    Future <void> loadCatches() async {
     http.post(Uri.parse("${MyConfig().SERVER}/barter_it2/php/load_items3.php"),
         body: {
           "user_id": widget.user.id,
-          "numberofpage": pg.toString()
+          "numberofpage": curpage.toString()
         }).then((response) {
           //print(response.body);
       log(response.body);

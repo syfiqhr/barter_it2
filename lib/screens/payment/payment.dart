@@ -9,7 +9,7 @@ class Payment{
 
   Future <bool> makePayment(String amount) async {
     try{
-      paymentIntent = await createPaymentIntent("10000", 'MYR');
+      paymentIntent = await createPaymentIntent("200", 'MYR');
 
       var gpay = const PaymentSheetGooglePay(
         merchantCountryCode: "MYS", currencyCode: "MYR", testEnv: true);

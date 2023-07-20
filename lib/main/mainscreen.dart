@@ -24,7 +24,7 @@ class _MainScreenState extends State<MainScreen> {
     super.initState();
     tabchildren = [
      ListItems(user:widget.user),
-     BarterScreen(user:widget.user),
+     BarterIt(user:widget.user),
      ProfileTabScreen(user:widget.user), 
      NewScreen(user:widget.user)       
     ];
@@ -46,16 +46,16 @@ class _MainScreenState extends State<MainScreen> {
           type: BottomNavigationBarType.fixed,
           currentIndex: _currentIndex,
           items: const [ 
-            BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.post_add_rounded,
-                ),
-                label: "Listing"),
                  BottomNavigationBarItem(
                 icon: Icon(
                   Icons.balance,
                 ),
                 label: "Barter It"), 
+                 BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.post_add_rounded,
+                ),
+                label: "Listing"),
             BottomNavigationBarItem(
                 icon: Icon(
                   Icons.person,
@@ -74,10 +74,10 @@ class _MainScreenState extends State<MainScreen> {
     setState(() {
       _currentIndex = value;
       if (_currentIndex == 0) {
-        maintitle = "Listing";
+        maintitle = "Barter It";
       } 
       if (_currentIndex == 1) {
-        maintitle = "Barter It";
+        maintitle = "Listing";
       }
       if (_currentIndex == 2) {
         maintitle = "Profile";

@@ -1,11 +1,10 @@
+import 'package:barter_it2/screens/barterit/itemdetails4.dart';
 import 'package:barter_it2/screens/payment/payment.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_awesome_buttons/flutter_awesome_buttons.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
 import '../../models/item.dart';
 import '../../models/user.dart';
+import '../listing/listitems.dart';
 
 class CheckOutOption extends StatefulWidget {
   final User user;
@@ -24,7 +23,7 @@ class _CheckOutOptionState extends State<CheckOutOption> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Check Out"),
+        title: const Text("Barter It"),
       ),
       body: Padding(
         padding: const EdgeInsets.all(12.0),
@@ -33,27 +32,27 @@ class _CheckOutOptionState extends State<CheckOutOption> {
             const SizedBox(
               height: 36,
             ),
-            Container(
-              height: 80,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12.0),
-                border: Border.all(width: 3.0),
-              ),
-              child: Row(
-                children: [
-                  Radio(value: 1, groupValue: groupValue, onChanged: (value){
-                    setState(() {
-                      groupValue=value!;
-                    });
-                  },),
-                  const Icon(Icons.money),
-                  const SizedBox(width: 12,),
-                  const Text("Cash on Delivery", 
-                  style: TextStyle(color: Colors.black,fontSize: 18, fontWeight: FontWeight.bold),),
-                ],
-              ),
-            ),
+            // Container(
+            //   height: 80,
+            //   width: double.infinity,
+            //   decoration: BoxDecoration(
+            //     borderRadius: BorderRadius.circular(12.0),
+            //     border: Border.all(width: 3.0),
+            //   ),
+            //   // child: Row(
+            //   //   children: [
+            //   //     Radio(value: 1, groupValue: groupValue, onChanged: (value){
+            //   //       setState(() {
+            //   //         groupValue=value!;
+            //   //       });
+            //   //     },),
+            //   //     const Icon(Icons.money),
+            //   //     const SizedBox(width: 12,),
+            //   //     const Text("Cash on Delivery", 
+            //   //     style: TextStyle(color: Colors.black,fontSize: 18, fontWeight: FontWeight.bold),),
+            //   //   ],
+            //   // ),
+            // ),
             const SizedBox(
               height: 24),
             Container(
@@ -79,31 +78,46 @@ class _CheckOutOptionState extends State<CheckOutOption> {
             ),
             const SizedBox(height: 24,),
             ElevatedButton(
-              onPressed: ()async {
-                if(groupValue == 1){
-                  Fluttertoast.showToast(
-                     msg: "Order Success",
-                     toastLength: Toast.LENGTH_SHORT,
-                     gravity: ToastGravity.BOTTOM,
-                     timeInSecForIosWeb: 1,
-                     fontSize: 16);
-                }else{
-                  final itemPrice = (widget.item.itemPrice)! * 100;
-                  bool isSuccessfullyPayment = await Payment.instance.makePayment(itemPrice.toString());
-                 /* if(isSuccessfullyPayment){
-                    Fluttertoast.showToast(
-                     msg: "Payment Success",
-                     toastLength: Toast.LENGTH_SHORT,
-                     gravity: ToastGravity.BOTTOM,
-                     timeInSecForIosWeb: 1,
-                     fontSize: 16);
-                  } */
-                }
+  onPressed: () async {
+    if (groupValue == 1) {
+      Fluttertoast.showToast(
+        msg: "Order Success",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        fontSize: 16,
+      );
+    } else {
+      final itemPrice = (widget.item.itemPrice)! * 100;
+      bool isSuccessfullyPayment = await Payment.instance.makePayment(itemPrice.toString());
+      /* if(isSuccessfullyPayment){
+        Fluttertoast.showToast(
+         msg: "Payment Success",
+         toastLength: Toast.LENGTH_SHORT,
+         gravity: ToastGravity.BOTTOM,
+         timeInSecForIosWeb: 1,
+         fontSize: 16);
+      } */
+    }
 
-              },
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.brown),
-              child: const Text("Continue", style: TextStyle(color: Colors.white,fontSize: 18, fontWeight: FontWeight.bold),),
-            ),
+    // Navigate to ListItems class
+    await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (content) => ItemDetails4(
+          user: widget.user, item: widget.item,
+        ),
+      ),
+    );
+  },
+  style: ElevatedButton.styleFrom(backgroundColor: Colors.brown),
+  child: const Text(
+    "Continue",
+    style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+  ),
+  // Remove the onPressed here since it is already added in the button onPressed handler above
+),
+
           ],
         ),
       ),
